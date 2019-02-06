@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ibis.EBNF
 {
-    internal class Rule
+    internal abstract class Rule
     {
-
+        public abstract bool IsValid(ReadOnlySpan<char> span);
     }
 }

@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Ibis.EBNF
 {
     internal class Parser
     {
-        private Dictionary<string, Rule> rules = new Dictionary<string, Rule>();
-
         public Dictionary<string, Rule> Parse(string grammar)
         {
-            var span = grammar.AsSpan();
+            var rules = GetRules(grammar);
+
+            return null;
+        }
+
+        internal List<(string name, string body)> GetRules(string grammar)
+        {
+            var rules = new List<(string name, string body)>();
+
+
 
             return rules;
         }
