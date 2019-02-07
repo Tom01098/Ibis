@@ -1,26 +1,26 @@
 ﻿
-whitespace = ? whitespace characters ?
+whitespace = ? whitespace characters ? ;
 
-character = ? a-z and A-Z ?
+character = ? a-z and A-Z ? ;
 
-number = ? 0-9 ?
-
-
-
-rule = name whitespace '=' whitespace rule_body
-
-name = character {character | number}
-
-rule_body = rule_statement {whitespace '|' whitespace rule_statement}
-
-rule_statement = optional | repetition | grouping | literal | name
+number = ? 0-9 ? ;
 
 
 
-optional = '[' rule_body ']'
+rule = name [whitespace] '=' rule_body [whitespace] ';' ;
 
-repetition = '{' rule_body '}'
+name = character {character | number} ;
 
-grouping = '(' rule_body ')'
+rule_body = [whitespace] rule_statement {whitespace '|' whitespace rule_statement} [whitespace] ;
 
-literal = ''' (character | number) {character | number} '''
+rule_statement = optional | repetition | grouping | literal | name ;
+
+
+
+optional = '[' rule_body ']' ;
+
+repetition = '{' rule_body '}' ;
+
+grouping = '(' rule_body ')' ;
+
+literal = ''' (character | number) {character | number} ''' ;
