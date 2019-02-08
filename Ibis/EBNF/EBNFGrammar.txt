@@ -7,7 +7,7 @@ number = ? 0-9 ?;
 
 
 
-rule = name [whitespace] '=' rule_body [whitespace] ';';
+rule = [whitespace] name [whitespace] '=' rule_body ';';
 
 name = character {character | number};
 
