@@ -4,7 +4,7 @@
     {
         internal class Body : Rule
         {
-            private readonly Rule[] rules;
+            internal readonly Rule[] rules;
 
             public Body(Rule[] rules)
             {
@@ -14,7 +14,7 @@
 
         internal class Optional : Rule
         {
-            private readonly Body body;
+            internal readonly Body body;
 
             public Optional(Body body)
             {
@@ -24,7 +24,7 @@
 
         internal class Repetition : Rule
         {
-            private readonly Body body;
+            internal readonly Body body;
 
             public Repetition(Body body)
             {
@@ -34,7 +34,7 @@
 
         internal class Grouping : Rule
         {
-            private readonly Body body;
+            internal readonly Body body;
 
             public Grouping(Body body)
             {
@@ -44,11 +44,21 @@
 
         internal class Literal : Rule
         {
-            private readonly string literal;
+            internal readonly string literal;
 
             public Literal(string literal)
             {
                 this.literal = literal;
+            }
+        }
+
+        internal class Name : Rule
+        {
+            internal readonly string name;
+
+            public Name(string name)
+            {
+                this.name = name;
             }
         }
     }

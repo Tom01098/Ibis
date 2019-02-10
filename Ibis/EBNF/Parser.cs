@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Char;
 
 namespace Ibis.EBNF
 {
@@ -7,7 +8,7 @@ namespace Ibis.EBNF
     {
         private GrammarEnumerator enumerator;
 
-        public Dictionary<string, Rule> Parse(string grammar)
+        public Dictionary<string, Rule.Body> Parse(string grammar)
         {
             enumerator = new GrammarEnumerator(grammar);
 
@@ -37,6 +38,10 @@ namespace Ibis.EBNF
         // rule_body = [whitespace] rule_statement {whitespace '|' whitespace rule_statement} [whitespace];
         private Rule.Body RuleBody()
         {
+            Whitespace();
+
+            var statement = ParseWith<Rule>(Optional, Repetition, Grouping, Literal, Name);
+
             return null;
         }
 
@@ -62,6 +67,27 @@ namespace Ibis.EBNF
         private Rule.Literal Literal()
         {
             return null;
+        }
+
+        // name = character {character | number};
+        private Rule.Name Name()
+        {
+            return null;
+        }
+
+        private bool Whitespace()
+        {
+            if (!IsWhiteSpace(enumerator.Current))
+            {
+                return false;
+            }
+
+            while (IsWhiteSpace(enumerator.Current))
+            {
+                enumerator.MoveNext();
+            }
+
+            return true;
         }
     }
 }
