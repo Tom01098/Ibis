@@ -52,5 +52,24 @@ y";
             Assert.AreEqual('y', enumerator.Current);
             Assert.AreEqual(false, enumerator.MoveNext());
         }
+
+        [TestMethod]
+        public void Backtracking()
+        {
+            var str = "abc";
+            var enumerator = new GrammarEnumerator(str);
+
+            Assert.AreEqual('a', enumerator.Current);
+            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual('b', enumerator.Current);
+            Assert.AreEqual(true, enumerator.MoveNext());
+            enumerator.ChangeIndex(0);
+            Assert.AreEqual('a', enumerator.Current);
+            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual('b', enumerator.Current);
+            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual('c', enumerator.Current);
+            Assert.AreEqual(false, enumerator.MoveNext());
+        }
     }
 }
