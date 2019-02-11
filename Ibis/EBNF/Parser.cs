@@ -45,6 +45,12 @@ namespace Ibis.EBNF
             return null;
         }
 
+        // rule_section = rule_statement {whitespace rule_statement};
+        private Rule.Section RuleSection()
+        {
+            return null;
+        }
+
         // optional = '[' rule_body ']';
         private Rule.Optional Optional()
         {

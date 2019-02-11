@@ -13,7 +13,7 @@ name = character {character | number};
 
 rule_body = [whitespace] rule_section {whitespace '|' whitespace rule_section} [whitespace];
 
-rule_section = rule_statement{whitespace rule_statement};
+rule_section = rule_statement {whitespace rule_statement};
 
 rule_statement = optional | repetition | grouping | literal | name;
 

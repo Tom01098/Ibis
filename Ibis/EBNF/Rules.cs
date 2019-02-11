@@ -4,9 +4,19 @@
     {
         internal class Body : Rule
         {
+            internal readonly Section[] sections;
+
+            public Body(Section[] sections)
+            {
+                this.sections = sections;
+            }
+        }
+
+        internal class Section : Rule
+        {
             internal readonly Rule[] rules;
 
-            public Body(Rule[] rules)
+            public Section(Rule[] rules)
             {
                 this.rules = rules;
             }
