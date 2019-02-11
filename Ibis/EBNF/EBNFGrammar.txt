@@ -11,7 +11,9 @@ rule = [whitespace] name [whitespace] '=' rule_body ';';
 
 name = character {character | number};
 
-rule_body = [whitespace] rule_statement {whitespace '|' whitespace rule_statement} [whitespace];
+rule_body = [whitespace] rule_section {whitespace '|' whitespace rule_section} [whitespace];
+
+rule_section = rule_statement{whitespace rule_statement};
 
 rule_statement = optional | repetition | grouping | literal | name;
 
