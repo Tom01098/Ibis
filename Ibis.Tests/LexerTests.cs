@@ -232,7 +232,7 @@ namespace Ibis.Tests
         public void Rules()
         {
             var str = @"number = digit{digit};
-                        digit = 0 | 1;";
+                        digit = '0' | '1';";
             var tokens = new Parser().Lex(str);
 
             var expected = new List<Token>
@@ -246,9 +246,57 @@ namespace Ibis.Tests
                 new SymbolToken(SymbolType.Semicolon),
                 new IdentifierToken("digit"),
                 new SymbolToken(SymbolType.Equals),
+                new SymbolToken(SymbolType.Quotation),
                 new IdentifierToken("0"),
+                new SymbolToken(SymbolType.Quotation),
                 new SymbolToken(SymbolType.Pipe),
+                new SymbolToken(SymbolType.Quotation),
                 new IdentifierToken("1"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.Semicolon),
+                new EOFToken()
+            };
+
+            CollectionAssert.AreEqual(expected, tokens);
+        }
+
+        [TestMethod]
+        public void Rules2()
+        {
+            var str = @"character = 'A' | 'B';
+                        digit = '0' | '1';
+                        literal = {character | digit};";
+            var tokens = new Parser().Lex(str);
+
+            var expected = new List<Token>
+            {
+                new IdentifierToken("character"),
+                new SymbolToken(SymbolType.Equals),
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("A"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.Pipe),
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("B"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.Semicolon),
+                new IdentifierToken("digit"),
+                new SymbolToken(SymbolType.Equals),
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("0"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.Pipe),
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("1"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.Semicolon),
+                new IdentifierToken("literal"),
+                new SymbolToken(SymbolType.Equals),
+                new SymbolToken(SymbolType.OpenCurlyParenthesis),
+                new IdentifierToken("character"),
+                new SymbolToken(SymbolType.Pipe),
+                new IdentifierToken("digit"),
+                new SymbolToken(SymbolType.CloseCurlyParenthesis),
                 new SymbolToken(SymbolType.Semicolon),
                 new EOFToken()
             };
