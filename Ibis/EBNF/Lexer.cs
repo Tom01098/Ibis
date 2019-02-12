@@ -8,7 +8,7 @@ namespace Ibis.EBNF
 {
     internal partial class Parser
     {
-        internal List<Token> Lex(string grammar)
+        public List<Token> Lex(string grammar)
         {
             var tokens = new List<Token>();
             var builder = new StringBuilder();

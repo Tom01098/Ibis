@@ -23,4 +23,4 @@ repetition = '{' rule_body '}';
 
 grouping = '(' rule_body ')';
 
-literal = ''' name ''';
+literal = ''' (character | number) {character | number} ''';
