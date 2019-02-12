@@ -2,7 +2,7 @@
 
 namespace Ibis.EBNF.AST
 {
-    internal class RuleSection : Node
+    internal class RuleSection
     {
         public List<RuleStatement> RuleStatements { get; }
 

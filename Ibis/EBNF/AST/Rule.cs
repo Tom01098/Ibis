@@ -1,6 +1,6 @@
 ﻿namespace Ibis.EBNF.AST
 {
-    internal class Rule : Node
+    internal class Rule
     {
         public Name Name { get; }
         public RuleBody RuleBody { get; }

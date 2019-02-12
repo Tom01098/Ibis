@@ -1,6 +1,6 @@
 ﻿namespace Ibis.EBNF.AST
 {
-    internal abstract class RuleStatement : Node
+    internal abstract class RuleStatement
     {
 
     }
