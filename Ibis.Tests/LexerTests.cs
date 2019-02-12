@@ -16,7 +16,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new IdentifierToken("a")
+                new IdentifierToken("a"),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -30,7 +31,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new IdentifierToken("ab51")
+                new IdentifierToken("ab51"),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -44,7 +46,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.OpenSquareParenthesis)
+                new SymbolToken(SymbolType.OpenSquareParenthesis),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -58,7 +61,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.CloseSquareParenthesis)
+                new SymbolToken(SymbolType.CloseSquareParenthesis),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -72,7 +76,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.OpenParenthesis)
+                new SymbolToken(SymbolType.OpenParenthesis),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -86,7 +91,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.CloseParenthesis)
+                new SymbolToken(SymbolType.CloseParenthesis),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -100,7 +106,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.OpenCurlyParenthesis)
+                new SymbolToken(SymbolType.OpenCurlyParenthesis),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -114,7 +121,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.CloseCurlyParenthesis)
+                new SymbolToken(SymbolType.CloseCurlyParenthesis),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -128,7 +136,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.Semicolon)
+                new SymbolToken(SymbolType.Semicolon),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -142,7 +151,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.Equals)
+                new SymbolToken(SymbolType.Equals),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -156,7 +166,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.Pipe)
+                new SymbolToken(SymbolType.Pipe),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -170,7 +181,8 @@ namespace Ibis.Tests
 
             var expected = new List<Token>
             {
-                new SymbolToken(SymbolType.Quotation)
+                new SymbolToken(SymbolType.Quotation),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -188,7 +200,8 @@ namespace Ibis.Tests
                 new SymbolToken(SymbolType.Equals),
                 new SymbolToken(SymbolType.Quotation),
                 new IdentifierToken("x"),
-                new SymbolToken(SymbolType.Quotation)
+                new SymbolToken(SymbolType.Quotation),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -208,7 +221,8 @@ namespace Ibis.Tests
                 new SymbolToken(SymbolType.OpenCurlyParenthesis),
                 new IdentifierToken("digit"),
                 new SymbolToken(SymbolType.CloseCurlyParenthesis),
-                new SymbolToken(SymbolType.Semicolon)
+                new SymbolToken(SymbolType.Semicolon),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);
@@ -235,7 +249,8 @@ namespace Ibis.Tests
                 new IdentifierToken("0"),
                 new SymbolToken(SymbolType.Pipe),
                 new IdentifierToken("1"),
-                new SymbolToken(SymbolType.Semicolon)
+                new SymbolToken(SymbolType.Semicolon),
+                new EOFToken()
             };
 
             CollectionAssert.AreEqual(expected, tokens);

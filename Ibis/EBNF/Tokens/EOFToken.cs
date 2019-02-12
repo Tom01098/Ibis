@@ -6,10 +6,10 @@
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as SymbolToken);
+            return Equals(obj as EOFToken);
         }
 
-        public bool Equals(SymbolToken other)
+        public bool Equals(EOFToken other)
         {
             return other != null;
         }

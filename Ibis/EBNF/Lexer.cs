@@ -79,6 +79,8 @@ namespace Ibis.EBNF
                 index++;
             }
 
+            tokens.Add(new EOFToken());
+
             return tokens;
         }
     }
