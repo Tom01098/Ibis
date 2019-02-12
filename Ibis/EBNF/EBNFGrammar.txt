@@ -1,19 +1,17 @@
 ﻿
-whitespace = ? whitespace characters ?;
-
 character = ? a-z and A-Z ?;
 
 number = ? 0-9 ?;
 
 
 
-rule = [whitespace] name [whitespace] '=' rule_body ';';
+rule = name '=' rule_body ';';
 
-name = character {character | number};
+name = (character | number) {character | number};
 
-rule_body = [whitespace] rule_section {whitespace '|' whitespace rule_section} [whitespace];
+rule_body = rule_section {'|' rule_section};
 
-rule_section = rule_statement {whitespace rule_statement};
+rule_section = rule_statement {rule_statement};
 
 rule_statement = optional | repetition | grouping | literal | name;
 
@@ -25,4 +23,4 @@ repetition = '{' rule_body '}';
 
 grouping = '(' rule_body ')';
 
-literal = ''' (character | number) {character | number} ''';
+literal = ''' name ''';
