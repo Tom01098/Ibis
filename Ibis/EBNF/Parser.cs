@@ -6,9 +6,18 @@ namespace Ibis.EBNF
 {
     internal partial class Parser
     {
-        public List<Rule> Parse(List<Token> tokens)
+        private TokenEnumerator tokens;
+
+        public List<Rule> Parse(List<Token> tokenList)
         {
+            tokens = new TokenEnumerator(tokenList.ToArray());
+
             var rules = new List<Rule>();
+
+            while (!(tokens.Current is EOFToken))
+            {
+                rules.Add(Rule());
+            }
 
             return rules;
         }

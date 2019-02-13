@@ -8,6 +8,18 @@ namespace Ibis.EBNF
 {
     internal partial class Parser
     {
+        /// <summary>
+        /// Convert an input string - in the form of an EBNF grammar -
+        /// into a list of tokens representing it
+        /// </summary>
+        /// 
+        /// <param name="grammar">
+        /// The EBNF grammar as a string
+        /// </param>
+        /// 
+        /// <returns>
+        /// The EBNF grammar as a list of tokens
+        /// </returns>
         public List<Token> Lex(string grammar)
         {
             var tokens = new List<Token>();
