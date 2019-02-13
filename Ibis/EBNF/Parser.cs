@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ibis.EBNF.AST;
+﻿using Ibis.EBNF.AST;
 using Ibis.EBNF.Tokens;
+using System.Collections.Generic;
 
 namespace Ibis.EBNF
 {
@@ -13,6 +11,60 @@ namespace Ibis.EBNF
             var rules = new List<Rule>();
 
             return rules;
+        }
+
+        // rule = name '=' rule_body ';';
+        private Rule Rule()
+        {
+            return null;
+        }
+
+        // name = (character | number) {character | number};
+        private Name Name()
+        {
+            return null;
+        }
+
+        // rule_body = rule_section {'|' rule_section};
+        private RuleBody RuleBody()
+        {
+            return null;
+        }
+
+        // rule_section = rule_statement {rule_statement};
+        private RuleSection RuleSection()
+        {
+            return null;
+        }
+
+        // rule_statement = optional | repetition | grouping | literal | name;
+        private RuleStatement RuleStatement()
+        {
+            return null;
+        }
+
+        // optional = '[' rule_body ']';
+        private Optional Optional()
+        {
+            return null;
+        }
+
+        // repetition = '{' rule_body '}';
+        private Repetition Repetition()
+        {
+            return null;
+        }
+
+        // grouping = '(' rule_body ')';
+        private Grouping Grouping()
+        {
+            return null;
+        }
+
+        // literal = ''' (character | number) {character | number} ''';
+        private Literal Literal()
+        {
+            return null;
         }
     }
 }
