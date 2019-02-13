@@ -147,6 +147,41 @@ namespace Ibis.Tests
         }
 
         [TestMethod]
+        public void OptionalInGrouping()
+        {
+            var tokens = new List<Token>
+            {
+                new IdentifierToken("x"),
+                new SymbolToken(SymbolType.Equals),
+                new SymbolToken(SymbolType.OpenParenthesis),
+                new SymbolToken(SymbolType.OpenSquareParenthesis),
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("x"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.CloseSquareParenthesis),
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("y"),
+                new SymbolToken(SymbolType.Quotation),
+                new SymbolToken(SymbolType.CloseParenthesis),
+                new SymbolToken(SymbolType.Semicolon)
+            };
+
+            var rules = new Parser().Parse(tokens);
+
+            Assert.AreEqual(1, rules.Count);
+            Assert.AreEqual("x", rules[0].Name.Value);
+            Assert.AreEqual("x",
+                ((Literal)((Optional)((Grouping)rules[0]
+                .RuleBody.RuleSections[0].RuleStatements[0])
+                .RuleBody.RuleSections[0].RuleStatements[0])
+                .RuleBody.RuleSections[0].RuleStatements[0]).Value);
+            Assert.AreEqual("y",
+                ((Literal)((Grouping)rules[0]
+                .RuleBody.RuleSections[0].RuleStatements[0])
+                .RuleBody.RuleSections[0].RuleStatements[1]).Value);
+        }
+
+        [TestMethod]
         public void Multiple()
         {
             var tokens = new List<Token>
