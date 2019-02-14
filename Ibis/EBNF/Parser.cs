@@ -22,6 +22,31 @@ namespace Ibis.EBNF
             return rules;
         }
 
+        private IdentifierToken AcceptIdentifier()
+        {
+            var identifier = tokens.Current as IdentifierToken;
+
+            if (!(identifier is null))
+            {
+                tokens.MoveNext();
+            }
+
+            return identifier;
+        }
+
+        private SymbolToken AcceptSymbol(SymbolType type)
+        {
+            var symbol = tokens.Current as SymbolToken;
+
+            if (!(symbol is null) && symbol.Type == type)
+            {
+                tokens.MoveNext();
+                return symbol;
+            }
+
+            return null;
+        }
+
         // rule = name '=' rule_body ';';
         private Rule Rule()
         {
