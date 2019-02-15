@@ -141,9 +141,9 @@ namespace Ibis.Tests
             Assert.AreEqual(1, rules.Count);
             Assert.AreEqual("x", rules[0].Name.Value);
             Assert.AreEqual("a", 
-                ((Name)((Repetition)rules[0].RuleBody.RuleSections[0].RuleStatements[1]).RuleBody.RuleSections[0].RuleStatements[0]).Value);
+                ((Name)((Repetition)rules[0].RuleBody.RuleSections[0].RuleStatements[0]).RuleBody.RuleSections[0].RuleStatements[0]).Value);
             Assert.AreEqual("b",
-                ((Name)((Repetition)rules[0].RuleBody.RuleSections[0].RuleStatements[1]).RuleBody.RuleSections[1].RuleStatements[0]).Value);
+                ((Name)((Repetition)rules[0].RuleBody.RuleSections[0].RuleStatements[0]).RuleBody.RuleSections[1].RuleStatements[0]).Value);
         }
 
         [TestMethod]
@@ -163,7 +163,8 @@ namespace Ibis.Tests
                 new IdentifierToken("y"),
                 new SymbolToken(SymbolType.Quotation),
                 new SymbolToken(SymbolType.CloseParenthesis),
-                new SymbolToken(SymbolType.Semicolon)
+                new SymbolToken(SymbolType.Semicolon),
+                new EOFToken()
             };
 
             var rules = new Parser().Parse(tokens);
