@@ -1,5 +1,6 @@
 ﻿using Ibis.EBNF.AST;
 using Ibis.EBNF.Tokens;
+using System;
 using System.Collections.Generic;
 
 namespace Ibis.EBNF
@@ -16,7 +17,15 @@ namespace Ibis.EBNF
 
             while (!(tokens.Current is EOFToken))
             {
-                rules.Add(Rule());
+                var rule = ParseWith(Rule);
+
+                if (rule is null)
+                {
+                    throw new ArgumentException(
+                        $"Unexpected token {tokens.Current.ToString()}");
+                }
+
+                rules.Add(rule);
             }
 
             return rules;
@@ -42,6 +51,26 @@ namespace Ibis.EBNF
             {
                 tokens.MoveNext();
                 return symbol;
+            }
+
+            return null;
+        }
+
+        private T ParseWith<T>(params Func<T>[] methods)
+            where T : class
+        {
+            tokens.SetBacktrackPoint();
+
+            foreach (var method in methods)
+            {
+                T result = method();
+
+                if (!(result is null))
+                {
+                    return result;
+                }
+
+                tokens.Backtrack();
             }
 
             return null;
