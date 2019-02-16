@@ -9,6 +9,17 @@ namespace Ibis.EBNF
     {
         private TokenEnumerator tokens;
 
+        /// <summary>
+        /// Produce a list of rules from a list of tokens
+        /// </summary>
+        /// 
+        /// <param name="tokenList">
+        /// The list of tokens
+        /// </param>
+        /// 
+        /// <returns>
+        /// The list of rules produced from the tokens
+        /// </returns>
         public List<Rule> Parse(List<Token> tokenList)
         {
             tokens = new TokenEnumerator(tokenList.ToArray());

@@ -189,6 +189,20 @@ namespace Ibis.Tests
         }
 
         [TestMethod]
+        public void SpecialCharacterInQuotation()
+        {
+            var str = "'x (y)'";
+            var tokens = new Parser().Lex(str);
+
+            var expected = new List<Token>
+            {
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("x (y)"),
+                new SymbolToken(SymbolType.Quotation)
+            };
+        }
+
+        [TestMethod]
         public void Rule()
         {
             var str = "x = 'x'";

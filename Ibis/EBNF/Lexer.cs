@@ -82,6 +82,24 @@ namespace Ibis.EBNF
                 else if (span[index] == '\'')
                 {
                     tokens.Add(new SymbolToken(SymbolType.Quotation));
+                    index++;
+                    
+                    while (index < span.Length && span[index] != '\'')
+                    {
+                        builder.Append(span[index]);
+                        index++;
+                    }
+
+                    if (builder.Length != 0)
+                    {
+                        tokens.Add(new IdentifierToken(builder.ToString()));
+                        builder.Clear();
+                    }
+
+                    if (index < span.Length)
+                    {
+                        tokens.Add(new SymbolToken(SymbolType.Quotation));
+                    }
                 }
                 else if (span[index] == ';')
                 {
