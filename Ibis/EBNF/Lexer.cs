@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Ibis.EBNF.Tokens;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Ibis.EBNF.Tokens;
 using static System.Char;
 
 namespace Ibis.EBNF
@@ -23,7 +22,6 @@ namespace Ibis.EBNF
         public List<Token> Lex(string grammar)
         {
             var tokens = new List<Token>();
-            var builder = new StringBuilder();
 
             var span = grammar.AsSpan();
             var index = 0;
@@ -33,16 +31,15 @@ namespace Ibis.EBNF
                 // Identifier
                 if (IsLetterOrDigit(span[index]))
                 {
+                    var start = index;
+
                     do
                     {
-                        builder.Append(span[index]);
                         index++;
                     }
                     while (index < span.Length && IsLetterOrDigit(span[index]));
 
-                    tokens.Add(new IdentifierToken(builder.ToString()));
-
-                    builder.Clear();
+                    tokens.Add(new IdentifierToken(span.Slice(start, index - start).ToString()));
 
                     continue;
                 }
@@ -82,18 +79,18 @@ namespace Ibis.EBNF
                 else if (span[index] == '\'')
                 {
                     tokens.Add(new SymbolToken(SymbolType.Quotation));
+
                     index++;
+                    var start = index;
                     
                     while (index < span.Length && span[index] != '\'')
                     {
-                        builder.Append(span[index]);
                         index++;
                     }
 
-                    if (builder.Length != 0)
+                    if (index != start)
                     {
-                        tokens.Add(new IdentifierToken(builder.ToString()));
-                        builder.Clear();
+                        tokens.Add(new IdentifierToken(span.Slice(start, index - start).ToString()));
                     }
 
                     if (index < span.Length)
