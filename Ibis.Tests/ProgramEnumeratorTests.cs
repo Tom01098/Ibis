@@ -7,63 +7,80 @@ namespace Ibis.Tests
     public class ProgramEnumeratorTests
     {
         [TestMethod]
-        public void Enumerate()
+        public void Matching()
         {
-            var program = "xyz";
+            var program = "word otherWord";
             var enumerator = new ProgramEnumerator(program);
 
-            Assert.AreEqual('x', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
-            Assert.AreEqual('y', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
-            Assert.AreEqual('z', enumerator.Current);
-            Assert.AreEqual(false, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches("word"));
+            enumerator.Advance(4);
+            Assert.AreEqual(true, enumerator.Matches(" "));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches("otherWord"));
+            enumerator.Advance(9);
+            Assert.AreEqual(true, enumerator.IsFinished);
         }
 
         [TestMethod]
         public void Backtracking()
         {
-            var program = "abcd";
+            var program = "func FuncName = 3 * 4";
             var enumerator = new ProgramEnumerator(program);
 
-            Assert.AreEqual('a', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
-            Assert.AreEqual('b', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches("func"));
+            enumerator.Advance(4);
+            Assert.AreEqual(true, enumerator.Matches(" "));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches("FuncName"));
+            enumerator.Advance(8);
+            Assert.AreEqual(true, enumerator.Matches(" "));
+            enumerator.Advance(1);
             enumerator.SetBacktrackPoint();
-            Assert.AreEqual('c', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual(false, enumerator.Matches("'"));
+            enumerator.Advance(1);
             enumerator.Backtrack();
-            Assert.AreEqual('c', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
-            Assert.AreEqual('d', enumerator.Current);
-            Assert.AreEqual(false, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches("="));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches(" "));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches("3"));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches(" "));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches("*"));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches(" "));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches("4"));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.IsFinished);
         }
 
         [TestMethod]
         public void NestedBacktracking()
         {
-            var program = "abcd";
+            var program = "x = '4' | '5'";
             var enumerator = new ProgramEnumerator(program);
 
-            Assert.AreEqual('a', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches("x"));
+            enumerator.Advance(1);
+            Assert.AreEqual(true, enumerator.Matches(" = "));
+            enumerator.Advance(3);
             enumerator.SetBacktrackPoint();
-            Assert.AreEqual('b', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches("'4'"));
+            enumerator.Advance(3);
             enumerator.SetBacktrackPoint();
-            Assert.AreEqual('c', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual(false, enumerator.Matches(" / "));
+            enumerator.Advance(3);
             enumerator.Backtrack();
-            Assert.AreEqual('c', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches(" | "));
+            enumerator.Advance(3);
+            Assert.AreEqual(false, enumerator.Matches(")"));
+            enumerator.Advance(1);
             enumerator.Backtrack();
-            Assert.AreEqual('b', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
-            Assert.AreEqual('c', enumerator.Current);
-            Assert.AreEqual(true, enumerator.MoveNext());
-            Assert.AreEqual('d', enumerator.Current);
-            Assert.AreEqual(false, enumerator.MoveNext());
+            Assert.AreEqual(true, enumerator.Matches("'4' | '5'"));
+            enumerator.Advance(9);
+            Assert.AreEqual(true, enumerator.IsFinished);
         }
     }
 }

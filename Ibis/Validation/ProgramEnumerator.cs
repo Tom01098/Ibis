@@ -15,16 +15,28 @@ namespace Ibis.Validation
             indexes.Push(0);
         }
 
-        public char Current => program.Span[indexes.Peek()];
-
-        public bool MoveNext()
-        {
-            indexes.Push(indexes.Pop() + 1);
-            return indexes.Peek() < program.Length;
-        }
+        public bool IsFinished => indexes.Peek() >= program.Length;
 
         public void SetBacktrackPoint() => indexes.Push(indexes.Peek());
 
         public void Backtrack() => indexes.Pop();
+
+        public void Advance(int count) => indexes.Push(indexes.Pop() + count);
+
+        public bool Matches(string str)
+        {
+            var match = str.AsSpan();
+            var span = program.Span;
+
+            for (int i = 0; i < match.Length; i++)
+            {
+                if (match[i] != span[indexes.Peek() + i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
