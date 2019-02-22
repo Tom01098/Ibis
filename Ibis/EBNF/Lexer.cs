@@ -29,7 +29,7 @@ namespace Ibis.EBNF
             while (index < span.Length)
             {
                 // Identifier
-                if (IsLetterOrDigit(span[index]))
+                if (IsLetterOrDigit(span[index]) || span[index] == '_')
                 {
                     var start = index;
 
@@ -37,7 +37,7 @@ namespace Ibis.EBNF
                     {
                         index++;
                     }
-                    while (index < span.Length && IsLetterOrDigit(span[index]));
+                    while (index < span.Length && (IsLetterOrDigit(span[index]) || span[index] == '_'));
 
                     tokens.Add(new IdentifierToken(span.Slice(start, index - start).ToString()));
 

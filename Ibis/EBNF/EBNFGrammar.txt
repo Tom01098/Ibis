@@ -1,5 +1,5 @@
 ﻿
-character = ? a-z and A-Z ?;
+character = ? any letter, digit, or underscore ?;
 
 number = ? 0-9 ?;
 
