@@ -32,6 +32,8 @@ namespace Ibis.Validation
 
         private bool Validate(object obj)
         {
+            enumerator.SetBacktrackPoint();
+
             // RuleBody handling
             if (obj is RuleBody ruleBody)
             {
@@ -43,6 +45,7 @@ namespace Ibis.Validation
                     }
                 }
 
+                enumerator.Backtrack();
                 return false;
             }
             // RuleSection handling
@@ -52,6 +55,7 @@ namespace Ibis.Validation
                 {
                     if (!Validate(ruleStatement))
                     {
+                        enumerator.Backtrack();
                         return false;
                     }
                 }
@@ -71,17 +75,38 @@ namespace Ibis.Validation
             // Grouping handling
             else if (obj is Grouping grouping)
             {
-                throw new NotImplementedException();
+                var result = Validate(grouping.RuleBody);
+
+                if (!result)
+                {
+                    enumerator.Backtrack();
+                }
+
+                return result;
             }
             // Name handling
             else if (obj is Name name)
             {
-                throw new NotImplementedException();
+                var result = Validate(rules[name.Value]);
+
+                if (!result)
+                {
+                    enumerator.Backtrack();
+                }
+
+                return result;
             }
             // Literal handling
             else if (obj is Literal literal)
             {
-                throw new NotImplementedException();
+                if (enumerator.Matches(literal.Value))
+                {
+                    enumerator.Advance(literal.Value.Length);
+                    return true;
+                }
+
+                enumerator.Backtrack();
+                return false;
             }
 
             throw new ArgumentException("Could not validate supplied object");

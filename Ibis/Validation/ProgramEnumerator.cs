@@ -28,6 +28,11 @@ namespace Ibis.Validation
             var match = str.AsSpan();
             var span = program.Span;
 
+            if (match.Length + indexes.Peek() > span.Length)
+            {
+                return false;
+            }
+
             for (int i = 0; i < match.Length; i++)
             {
                 if (match[i] != span[indexes.Peek() + i])
