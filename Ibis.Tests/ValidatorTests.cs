@@ -674,5 +674,91 @@ namespace Ibis.Tests
             Assert.AreEqual(true, valid2Result);
             Assert.AreEqual(false, invalidResult);
         }
+
+        [TestMethod]
+        public void BinaryNumber()
+        {
+            var rules = new List<Rule>
+            {
+                new Rule
+                (
+                    new Name("main"),
+                    new RuleBody
+                    (
+                        new List<RuleSection>
+                        {
+                            new RuleSection
+                            (
+                                new List<RuleStatement>
+                                {
+                                    new Name("digit"),
+                                    new Repetition
+                                    (
+                                        new RuleBody
+                                        (
+                                            new List<RuleSection>
+                                            {
+                                                new RuleSection
+                                                (
+                                                    new List<RuleStatement>
+                                                    {
+                                                        new Name("digit")
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    )
+                ),
+                new Rule
+                (
+                    new Name("digit"),
+                    new RuleBody
+                    (
+                        new List<RuleSection>
+                        {
+                            new RuleSection
+                            (
+                                new List<RuleStatement>
+                                {
+                                    new Literal("0")
+                                }
+                            ),
+                            new RuleSection
+                            (
+                                new List<RuleStatement>
+                                {
+                                    new Literal("1")
+                                }
+                            )
+                        }
+                    )
+                )
+            };
+
+            var valid = "0";
+            var valid2 = "1";
+            var valid3 = "100001";
+            var valid4 = "111111000000";
+            var invalid = "";
+            var invalid2 = "0112001";
+
+            var validResult = new Validator().Validate(rules, valid);
+            var valid2Result = new Validator().Validate(rules, valid2);
+            var valid3Result = new Validator().Validate(rules, valid3);
+            var valid4Result = new Validator().Validate(rules, valid4);
+            var invalidResult = new Validator().Validate(rules, invalid);
+            var invalid2Result = new Validator().Validate(rules, invalid2);
+
+            Assert.AreEqual(true, validResult);
+            Assert.AreEqual(true, valid2Result);
+            Assert.AreEqual(true, valid3Result);
+            Assert.AreEqual(true, valid4Result);
+            Assert.AreEqual(false, invalidResult);
+            Assert.AreEqual(false, invalid2Result);
+        }
     }
 }

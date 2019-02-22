@@ -22,6 +22,17 @@ namespace Ibis.Tests
         }
 
         [TestMethod]
+        public void MatchingOutOfBounds()
+        {
+            var program = "abc";
+            var enumerator = new ProgramEnumerator(program);
+
+            Assert.AreEqual(false, enumerator.Matches("abcd"));
+            enumerator.Advance(4);
+            Assert.AreEqual(true, enumerator.IsFinished);
+        }
+
+        [TestMethod]
         public void Backtracking()
         {
             var program = "func FuncName = 3 * 4";

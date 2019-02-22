@@ -101,6 +101,11 @@ namespace Ibis.Validation
             {
                 enumerator.SetBacktrackPoint();
 
+                if (!rules.ContainsKey(name.Value))
+                {
+                    throw new ArgumentException($"'{name.Value}' is used but has not been defined");
+                }
+
                 var result = Validate(rules[name.Value]);
 
                 if (!result)
