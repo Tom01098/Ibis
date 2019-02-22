@@ -63,10 +63,13 @@ namespace Ibis.Validation
             // Repetition handling
             else if (obj is Repetition repetition)
             {
-                while (Validate(repetition.RuleBody))
+                do
                 {
-
+                    enumerator.SetBacktrackPoint();
                 }
+                while (Validate(repetition.RuleBody));
+
+                enumerator.Backtrack();
 
                 return true;
             }
