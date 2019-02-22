@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Ibis.Interactive": {
+      "commandName": "Project",
+      "commandLineArgs": "Grammar.txt Program.txt"
+    }
+  }
+}
