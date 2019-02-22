@@ -559,5 +559,120 @@ namespace Ibis.Tests
             Assert.AreEqual(true, valid5Result);
             Assert.AreEqual(false, invalidResult);
         }
+
+        [TestMethod]
+        public void OptionalOrLiteral()
+        {
+            var rules = new List<Rule>
+            {
+                new Rule
+                (
+                    new Name("main"),
+                    new RuleBody
+                    (
+                        new List<RuleSection>
+                        {
+                            new RuleSection
+                            (
+                                new List<RuleStatement>
+                                {
+                                    new Literal("B")
+                                }
+                            ),
+                            new RuleSection
+                            (
+                                new List<RuleStatement>
+                                {
+                                    new Optional
+                                    (
+                                        new RuleBody
+                                        (
+                                            new List<RuleSection>
+                                            {
+                                                new RuleSection
+                                                (
+                                                    new List<RuleStatement>
+                                                    {
+                                                        new Literal("A")
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    )
+                )
+            };
+
+            var valid = "";
+            var valid2 = "A";
+            var valid3 = "B";
+            var invalid = "AB";
+
+            var validResult = new Validator().Validate(rules, valid);
+            var valid2Result = new Validator().Validate(rules, valid2);
+            var valid3Result = new Validator().Validate(rules, valid3);
+            var invalidResult = new Validator().Validate(rules, invalid);
+
+            Assert.AreEqual(true, validResult);
+            Assert.AreEqual(true, valid2Result);
+            Assert.AreEqual(true, valid3Result);
+            Assert.AreEqual(false, invalidResult);
+        }
+
+        [TestMethod]
+        public void MultipleInOptional()
+        {
+            var rules = new List<Rule>
+            {
+                new Rule
+                (
+                    new Name("main"),
+                    new RuleBody
+                    (
+                        new List<RuleSection>
+                        {
+                            new RuleSection
+                            (
+                                new List<RuleStatement>
+                                {
+                                    new Optional
+                                    (
+                                        new RuleBody
+                                        (
+                                            new List<RuleSection>
+                                            {
+                                                new RuleSection
+                                                (
+                                                    new List<RuleStatement>
+                                                    {
+                                                        new Literal("A"),
+                                                        new Literal("B")
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    )
+                )
+            };
+
+            var valid = "";
+            var valid2 = "AB";
+            var invalid = "A";
+
+            var validResult = new Validator().Validate(rules, valid);
+            var valid2Result = new Validator().Validate(rules, valid2);
+            var invalidResult = new Validator().Validate(rules, invalid);
+
+            Assert.AreEqual(true, validResult);
+            Assert.AreEqual(true, valid2Result);
+            Assert.AreEqual(false, invalidResult);
+        }
     }
 }
