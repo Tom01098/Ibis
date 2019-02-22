@@ -27,13 +27,18 @@ namespace Ibis.Validation
                 throw new ArgumentException("Grammar does not contain a 'main' rule");
             }
 
-            return Validate(rules["main"]);
+            var result = Validate(rules["main"]);
+
+            if (!enumerator.IsFinished)
+            {
+                return false;
+            }
+
+            return result;
         }
 
         private bool Validate(object obj)
         {
-            enumerator.SetBacktrackPoint();
-
             // RuleBody handling
             if (obj is RuleBody ruleBody)
             {
@@ -44,18 +49,19 @@ namespace Ibis.Validation
                         return true;
                     }
                 }
-
-                enumerator.Backtrack();
+                
                 return false;
             }
             // RuleSection handling
             else if (obj is RuleSection ruleSection)
             {
+                //enumerator.SetBacktrackPoint();
+
                 foreach (var ruleStatement in ruleSection.RuleStatements)
                 {
                     if (!Validate(ruleStatement))
                     {
-                        enumerator.Backtrack();
+                        //enumerator.Backtrack();
                         return false;
                     }
                 }
@@ -65,21 +71,35 @@ namespace Ibis.Validation
             // Repetition handling
             else if (obj is Repetition repetition)
             {
-                throw new NotImplementedException();
+                while (Validate(repetition.RuleBody))
+                {
+
+                }
+
+                return true;
             }
             // Optional handling
             else if (obj is Optional optional)
             {
-                throw new NotImplementedException();
+                //enumerator.SetBacktrackPoint();
+
+                if (!Validate(optional.RuleBody))
+                {
+                    //enumerator.Backtrack();
+                }
+
+                return true;
             }
             // Grouping handling
             else if (obj is Grouping grouping)
             {
+                //enumerator.SetBacktrackPoint();
+
                 var result = Validate(grouping.RuleBody);
 
                 if (!result)
                 {
-                    enumerator.Backtrack();
+                    //enumerator.Backtrack();
                 }
 
                 return result;
@@ -87,11 +107,13 @@ namespace Ibis.Validation
             // Name handling
             else if (obj is Name name)
             {
+                //enumerator.SetBacktrackPoint();
+
                 var result = Validate(rules[name.Value]);
 
                 if (!result)
                 {
-                    enumerator.Backtrack();
+                    //enumerator.Backtrack();
                 }
 
                 return result;
@@ -99,13 +121,15 @@ namespace Ibis.Validation
             // Literal handling
             else if (obj is Literal literal)
             {
+                //enumerator.SetBacktrackPoint();
+
                 if (enumerator.Matches(literal.Value))
                 {
                     enumerator.Advance(literal.Value.Length);
                     return true;
                 }
 
-                enumerator.Backtrack();
+                //enumerator.Backtrack();
                 return false;
             }
 
