@@ -110,6 +110,15 @@ namespace Ibis.EBNF
                 {
                     tokens.Add(new SymbolToken(SymbolType.Semicolon));
                 }
+                // Comment
+                else if (span[index] == '#')
+                {
+                    while (span[index] != '\n')
+                    {
+                        index++;
+                    }
+                }
+                // Error
                 else if (!IsWhiteSpace(span[index]))
                 {
                     throw new ArgumentException($"Unrecognised character '{span[index]}'");

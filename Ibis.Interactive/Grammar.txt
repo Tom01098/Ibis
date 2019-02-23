@@ -1,5 +1,6 @@
 ﻿main = [whitespace] {rule [whitespace]};
 
+# Characters
 character = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 
 			'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' |
 			'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | '_';
@@ -12,7 +13,7 @@ whitespace_char = ' ' | '
 ';
 
 
-
+# Rule structures
 rule = name [whitespace] '=' [whitespace] rule_body [whitespace] ';';
 
 name = (character | number) {character | number};
@@ -24,7 +25,7 @@ rule_section = [whitespace] rule_statement [whitespace] {rule_statement [whitesp
 rule_statement = optional | repetition | grouping | literal | name;
 
 
-
+# Rule statements
 optional = '[' [whitespace] rule_body [whitespace] ']';
 
 repetition = '{' [whitespace] rule_body [whitespace] '}';

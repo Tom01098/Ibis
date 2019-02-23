@@ -215,8 +215,27 @@ namespace Ibis.Tests
             {
                 new SymbolToken(SymbolType.Quotation),
                 new IdentifierToken("x (y)"),
-                new SymbolToken(SymbolType.Quotation)
+                new SymbolToken(SymbolType.Quotation),
+                new EOFToken()
             };
+
+            CollectionAssert.AreEqual(expected, tokens);
+        }
+
+        [TestMethod]
+        public void Comment()
+        {
+            var str = @"# This is a comment
+                        num";
+            var tokens = new Parser().Lex(str);
+
+            var expected = new List<Token>
+            {
+                new IdentifierToken("num"),
+                new EOFToken()
+            };
+
+            CollectionAssert.AreEqual(expected, tokens);
         }
 
         [TestMethod]
