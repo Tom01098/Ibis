@@ -1,6 +1,7 @@
 ﻿using Ibis.EBNF.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using static System.Char;
 
 namespace Ibis.EBNF
@@ -25,6 +26,7 @@ namespace Ibis.EBNF
 
             var span = grammar.AsSpan();
             var index = 0;
+            var builder = new StringBuilder();
 
             while (index < span.Length)
             {
@@ -81,16 +83,22 @@ namespace Ibis.EBNF
                     tokens.Add(new SymbolToken(SymbolType.Quotation));
 
                     index++;
-                    var start = index;
                     
                     while (index < span.Length && span[index] != '\'')
                     {
+                        if (span[index] == '\\')
+                        {
+                            index++;
+                        }
+
+                        builder.Append(span[index]);
                         index++;
                     }
 
-                    if (index != start)
+                    if (builder.Length != 0)
                     {
-                        tokens.Add(new IdentifierToken(span.Slice(start, index - start).ToString()));
+                        tokens.Add(new IdentifierToken(builder.ToString()));
+                        builder.Clear();
                     }
 
                     if (index < span.Length)

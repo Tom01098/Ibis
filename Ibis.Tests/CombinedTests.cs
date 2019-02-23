@@ -41,5 +41,25 @@ namespace Ibis.Tests
             Assert.AreEqual(false, new Validator().Validate(rules, "0"));
             Assert.AreEqual(false, new Validator().Validate(rules, "0x"));
         }
+
+        [TestMethod]
+        public void EscapedQuotations()
+        {
+            var grammar = @"main = '\'' digit {digit} '\''; 
+                            digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';";
+
+            var parser = new Parser();
+            var rules = parser.Parse(parser.Lex(grammar));
+
+            Assert.AreEqual(true, new Validator().Validate(rules, "'2312'"));
+            Assert.AreEqual(true, new Validator().Validate(rules, "'23'"));
+            Assert.AreEqual(true, new Validator().Validate(rules, "'1'"));
+            Assert.AreEqual(true, new Validator().Validate(rules, "'949899042'"));
+            Assert.AreEqual(true, new Validator().Validate(rules, "'23219489245'"));
+            Assert.AreEqual(false, new Validator().Validate(rules, "''"));
+            Assert.AreEqual(false, new Validator().Validate(rules, "'"));
+            Assert.AreEqual(false, new Validator().Validate(rules, "23123'"));
+            Assert.AreEqual(false, new Validator().Validate(rules, "' 2312 '"));
+        }
     }
 }

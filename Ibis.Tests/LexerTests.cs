@@ -189,6 +189,23 @@ namespace Ibis.Tests
         }
 
         [TestMethod]
+        public void EscapeInQuotation()
+        {
+            var str = @"'\''";
+            var tokens = new Parser().Lex(str);
+
+            var expected = new List<Token>
+            {
+                new SymbolToken(SymbolType.Quotation),
+                new IdentifierToken("'"),
+                new SymbolToken(SymbolType.Quotation),
+                new EOFToken()
+            };
+
+            CollectionAssert.AreEqual(expected, tokens);
+        }
+
+        [TestMethod]
         public void SpecialCharacterInQuotation()
         {
             var str = "'x (y)'";
